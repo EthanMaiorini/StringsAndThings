@@ -1,5 +1,8 @@
 package io.zipcoder;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * @author tariq
@@ -15,7 +18,34 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
+        int count = 0;
+        int search;
+        int max = input.length()+1;
+
+        int findBlank = input.indexOf(" ");
+        while (findBlank != -1) {
+            if(((input.toUpperCase().charAt(findBlank-1)) == 'Y') || ((input.toUpperCase().charAt(findBlank-1)) == 'Z'))
+            count++;
+                findBlank = input.indexOf(" ",(findBlank+1));
+        }
+
+
+
+       /*search = input.toUpperCase().indexOf("Y ");
+      / if (search < max){
+           count++;
+       }else if((input.toUpperCase().indexOf("Z "))< max){
+           count++;
+       }
+
+*/
+        if (input.toUpperCase().endsWith("Y")){
+            count++;
+        }
+        if (input.toUpperCase().endsWith("Z")){
+            count++;
+        }
+        return count;
     }
 
     /**
@@ -28,7 +58,26 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        int length = base.length();
+        int removeLength = remove.length();
+        int whereIsString = 0;
+        String result ="";
+        String traverse = base;
+        whereIsString = traverse.indexOf(remove);
+        while (whereIsString != -1){
+            result = result.concat(traverse.substring(0,(whereIsString)));
+            traverse = traverse.substring((whereIsString+removeLength));
+            whereIsString = traverse.indexOf(remove);
+        }
+        if (result.length() <=0)
+            return base;
+        else result = result.concat(traverse);
+
+
+        //find the matching string
+        // remake the string from the
+
+        return result;
     }
 
     /**
@@ -39,9 +88,26 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("This is notnot") // Should return true
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
-    public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
+
+    public Boolean containsEqualNumberOfIsAndNot(String input) {
+        int var1 =0, var2 =0;
+        String check = input;
+        String check1 = input;
+        int whereIsIs = check.indexOf("is");
+        while (whereIsIs != -1) {
+            var1++;
+            whereIsIs = check.indexOf("is",(whereIsIs+1));
+        }
+        int whereIsNot = check1.indexOf("not");
+        while (whereIsNot != -1) {
+            var2++;
+            whereIsNot = check1.indexOf("not",(whereIsNot + 1));
+        }
+        if (var2 == var1){
+            return true;
+        } else return false;
     }
+
 
     /**
      * We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right.
@@ -51,7 +117,18 @@ public class StringsAndThings {
      *           gHappy("xxggyygxx") // Should return  false
      */
     public Boolean gIsHappy(String input){
-        return null;
+       // "(gg)" find g see if next char is g then continue
+        String check = input;
+        int whereIsg = check.indexOf("g");
+        while (whereIsg != -1){
+            int nextG = whereIsg +1;
+              if(check.charAt(nextG) == 'g'){
+                  check = check.substring(nextG+1);
+                  whereIsg = check.indexOf("g");
+            }else
+                return false;
+        }
+        return true;
     }
 
 
@@ -63,6 +140,16 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+       // [a-z]{3}
+        int count = 0;
+        int index = 0;
+        int length = input.length();
+        while (index <= (length-2)) {
+            if ((input.charAt(index) == input.charAt(index + 1)) && (input.charAt(index + 1) == (input.charAt(index + 2)))) {
+                count++;
+            }
+            index++;
+        }
+        return count;
     }
 }
